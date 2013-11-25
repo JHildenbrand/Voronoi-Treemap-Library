@@ -59,9 +59,12 @@ public class VoroCPU extends Thread {
 				if (voroNode == null) {
 					// notify that we are finished
 					if (runningThreads.size() == 0 && cellQueue.size() == 0) {
-					break;
+						break;
 					}else{
-					voroNode = cellQueue.take();
+						voroNode = cellQueue.poll(100, TimeUnit.MILLISECONDS);
+						if (voroNode == null){
+							continue;
+						}
 					}
 				}
 				runningThreads.add(this);
